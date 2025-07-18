@@ -4,11 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const generatedUrlElement = document.getElementById('generatedUrl');
     const copyBtn = document.getElementById('copyBtn');
     
-    // Form validation and URL generation
-    utmForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
+    // Function to generate and update URL
+    function generateUrl() {
         const baseUrl = document.getElementById('baseUrl').value.trim();
         const utmSource = document.getElementById('utmSource').value;
         const utmMedium = document.getElementById('utmMedium').value;
@@ -16,43 +13,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const utmTerm = document.getElementById('utmTerm').value.trim().replace(/\s+/g, '+');
         const utmContent = document.getElementById('utmContent').value.trim().replace(/\s+/g, '_');
         
-        // Validate required fields
+        // Check if required fields are filled
         if (!baseUrl || !utmSource || !utmMedium) {
-            alert('Please fill in all required fields');
             return;
         }
         
         // Validate URL format
         try {
-            new URL(baseUrl);
+            // Build UTM URL
+            let finalUrl = new URL(baseUrl);
+            
+            // Add UTM parameters
+            finalUrl.searchParams.set('utm_source', utmSource);
+            finalUrl.searchParams.set('utm_medium', utmMedium);
+            
+            if (utmCampaign) {
+                finalUrl.searchParams.set('utm_campaign', utmCampaign);
+            }
+            
+            if (utmTerm) {
+                finalUrl.searchParams.set('utm_term', utmTerm);
+            }
+            
+            if (utmContent) {
+                finalUrl.searchParams.set('utm_content', utmContent);
+            }
+            
+            // Display result
+            generatedUrlElement.textContent = finalUrl.toString();
+            resultContainer.classList.add('active');
+            resultContainer.style.display = 'block';
         } catch (e) {
-            alert('Please enter a valid URL including http:// or https://');
+            // Invalid URL format - don't update
             return;
         }
-        
-        // Build UTM URL
-        let finalUrl = new URL(baseUrl);
-        
-        // Add UTM parameters
-        finalUrl.searchParams.set('utm_source', utmSource);
-        finalUrl.searchParams.set('utm_medium', utmMedium);
-        
-        if (utmCampaign) {
-            finalUrl.searchParams.set('utm_campaign', utmCampaign);
-        }
-        
-        if (utmTerm) {
-            finalUrl.searchParams.set('utm_term', utmTerm);
-        }
-        
-        if (utmContent) {
-            finalUrl.searchParams.set('utm_content', utmContent);
-        }
-        
-        // Display result
-        generatedUrlElement.textContent = finalUrl.toString();
-        resultContainer.classList.add('active');
-        resultContainer.style.display = 'block';
+    }
+    
+    // Form submission (prevent default behavior)
+    utmForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        generateUrl();
     });
     
     // Copy to clipboard functionality
@@ -75,16 +75,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
     
-    // Form input validation
-    document.getElementById('utmCampaign').addEventListener('input', function(e) {
-        e.target.value = e.target.value.replace(/\s+/g, '_');
-    });
+    // Add input event listeners to all form fields
+    const formFields = ['baseUrl', 'utmSource', 'utmMedium', 'utmCampaign', 'utmTerm', 'utmContent'];
     
-    document.getElementById('utmTerm').addEventListener('input', function(e) {
-        e.target.value = e.target.value.replace(/\s+/g, '+');
-    });
-    
-    document.getElementById('utmContent').addEventListener('input', function(e) {
-        e.target.value = e.target.value.replace(/\s+/g, '_');
+    formFields.forEach(field => {
+        document.getElementById(field).addEventListener('input', function(e) {
+            // Apply specific formatting rules
+            if (field === 'utmCampaign' || field === 'utmContent') {
+                e.target.value = e.target.value.replace(/\s+/g, '_');
+            } else if (field === 'utmTerm') {
+                e.target.value = e.target.value.replace(/\s+/g, '+');
+            }
+            
+            // Generate URL on every input change
+            generateUrl();
+        });
     });
 });
