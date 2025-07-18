@@ -1,0 +1,253 @@
+:root {
+    --primary-color: rgb(4, 15, 41);
+    --secondary-color: #eb1923;
+    --accent-color: #f0f5fa;
+    --text-color: #333;
+    --light-text: #666;
+    --white: #fff;
+    --error: #eb1923;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #fff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px #eb1923 solid;
+}
+
+header .container {
+    text-align: center;
+    width:100%;
+    max-width: 100%;
+    padding: 20px 0px;
+    border-bottom: 5px white solid;
+}
+
+.logo {
+    margin-right: 20px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+header h1 {
+    font-weight: 300;
+    font-size: 24px;
+}
+
+main {
+    padding: 40px 0;
+}
+
+.intro-text {
+    margin: 30px 10px;
+}
+
+.intro-text h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.intro-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.form-container {
+    background-color: var(--white);
+    border-radius: 5px;
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); */
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.required {
+    color: var(--error);
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.description {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-top: 5px;
+}
+
+.btn-generate {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-generate:hover {
+    background-color: var(--primary-color);
+}
+
+.result-container {
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    display: none;
+}
+
+.result-container.active {
+    display: block;
+}
+
+.result-container h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.result-box {
+    background-color: var(--accent-color);
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+#generatedUrl {
+    word-break: break-all;
+    margin-bottom: 15px;
+}
+
+.btn-copy {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-copy:hover {
+    background-color: var(--secondary-color);
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Add these styles to your existing styles.css file */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    padding: 0 15px;
+    min-width: 250px;
+}
+
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .form-row .form-group {
+        width: 100%;
+    }
+}
+
+
+
+/* Updated button styles to match Fraser Yachts */
+.btn-generate, .btn-copy {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: 2px solid var(--primary-color);
+    padding: 12px 30px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-generate:hover, .btn-copy:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.btn-copy {
+    padding: 8px 20px;
+    font-size: 12px;
+}
